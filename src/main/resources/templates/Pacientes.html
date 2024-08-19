@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <title>
+    Lab System│Pacientes
+  </title>
+  <!-- Fonts and icons -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .nav-link.active {
+      background-color: #596CFF !important;
+      color: #fff !important;
+    }
+
+    .nav-link.active .icon-shape {
+      background-color: #2c3e50 !important;
+      color: white !important;
+    }
+
+    .nav-link.active i {
+      color: white !important;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .container-fluid {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding: 0 15px; /* Añadir padding para asegurar que el contenido no toque los bordes */
+    }
+
+    .card {
+      margin-bottom: 20px;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      table-layout: auto;
+    }
+
+    .table th, .table td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+    }
+
+    .table td .btn {
+      margin: 0 2px;
+    }
+
+    .main-content {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .sidenav {
+      width: 250px;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+<div class="min-height-300 position-absolute w-100" style="background-color: #596CFF;"></div>
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
+  <div class="sidenav-header">
+    <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+    <a class="navbar-brand m-0" href="/">
+      <img src="./assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+      <span class="ms-1 font-weight-bold">Lab System</span>
+    </a>
+  </div>
+  <hr class="horizontal dark mt-0">
+  <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link " id="nav-tablero" href="/">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Tablero</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-empleados" href="/empleados">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Empleados</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" id="nav-pacientes" href="/pacientes">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Pacientes</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-suplidores" href="/suplidores">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Suplidores</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-doctores" href="/doctores">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Doctores</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-ars" href="/ars">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">ARS</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-prueba" href="pruebas">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Pruebas</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+<main class="main-content position-relative border-radius-lg">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
+          <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tablero</li>
+        </ol>
+        <h6 class="font-weight-bolder text-white mb-0">Tablero</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+          <div class="input-group">
+          </div>
+        </div>
+        <ul class="navbar-nav  justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <form action="/logout" method="post" id="logoutForm" class="d-none">
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+            <a href="javascript:;" onclick="document.getElementById('logoutForm').submit();" class="nav-link text-white font-weight-bold px-0">
+              <i class="fa fa-user me-sm-1"></i>
+              <span class="d-sm-inline d-none">Cerrar sesión</span>
+            </a>
+          </li>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0">
+              <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+            <h6>Pacientes</h6>
+            <!-- Botón para abrir el modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarPacienteModal">Agregar Paciente</button>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha de Nacimiento</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Teléfono</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
+                </thead>
+                <tbody id="paciente-list">
+                <!-- Aquí se llenará la lista de pacientes desde el frontend -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-5">
+      <div class="modal fade" id="agregarPacienteModal" tabindex="-1" role="dialog" aria-labelledby="agregarPacienteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="agregarPacienteModalLabel">Registrar Paciente</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger d-none" id="error-message"><strong>Este documento ya está registrado</strong></div>
+              <div class="alert alert-warning d-none" id="tipo-documento-message"><strong>Debe seleccionar un tipo de documento</strong></div>
+              <form id="agregarPacienteForm">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="tipoDocumento">Tipo de Documento</label>
+                    <select class="form-control" id="tipoDocumento" name="tipoDocumento">
+                      <option value="Seleccionar">Seleccionar</option>
+                      <option value="Cedula">Cédula</option>
+                      <option value="Pasaporte">Pasaporte</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="documento">Número de Documento</label>
+                    <input type="text" class="form-control" id="documento" name="documento" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="correo">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="correo" name="correo" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="seguroSalud">Seguro de Salud</label>
+                    <select class="form-control" id="seguroSalud" name="seguroSalud" required onchange="toggleNSSField()">
+                      <!-- Opciones se llenarán dinámicamente -->
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="nss">NSS</label>
+                    <input type="text" class="form-control" id="nss" name="nss" disabled>
+                  </div>
+                </div>
+                <input type="hidden" id="activo" name="activo" value="true">
+                <button type="submit" class="btn btn-primary">Registrar Paciente</button>
+                <button type="button" class="btn btn-danger" id="cancelarEdicion" style="display:none;" data-dismiss="modal">Cancelar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal de confirmación para eliminar -->
+    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar eliminación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>¿Está seguro de que desea eliminar este paciente?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirmarEliminarBtn">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- Core JS Files -->
+<script src="/assets/js/core/popper.min.js"></script>
+<script src="/assets/js/core/bootstrap.min.js"></script>
+<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+<!-- jQuery y Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    cargarARS(); // Cargar ARS al cargar el documento
+
+    document.getElementById('agregarPacienteForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('error-message').classList.add('d-none');
+      document.getElementById('tipo-documento-message').classList.add('d-none');
+
+      const seguroSaludSelect = document.getElementById('seguroSalud');
+      const seguroSaludText = seguroSaludSelect.options[seguroSaludSelect.selectedIndex].text;
+
+      const tipoDocumento = document.getElementById('tipoDocumento').value;
+      if (tipoDocumento === "Seleccionar") {
+        const tipoDocumentoMessage = document.getElementById('tipo-documento-message');
+        tipoDocumentoMessage.classList.remove('d-none');
+        return;
+      }
+
+      const paciente = {
+        nombre: document.getElementById('nombre').value,
+        apellido: document.getElementById('apellido').value,
+        tipoDocumento: tipoDocumento,
+        documento: document.getElementById('documento').value,
+        fechaNacimiento: document.getElementById('fechaNacimiento').value,
+        telefono: document.getElementById('telefono').value,
+        direccion: document.getElementById('direccion').value,
+        seguroSalud: seguroSaludText,
+        nss: seguroSaludText === 'NO ASEGURADO' ? '' : document.getElementById('nss').value,
+        activo: true,
+        correo: document.getElementById('correo').value
+      };
+
+      $('#cancelarEdicion').click(function () {
+        document.getElementById('agregarPacienteForm').reset();
+        document.getElementById('tipoDocumento').value = 'Seleccionar';
+        document.getElementById('agregarPacienteModalLabel').innerText = 'Agregar Paciente';
+        document.querySelector('#agregarPacienteForm button[type="submit"]').innerText = 'Agregar Paciente';
+        document.getElementById('cancelarEdicion').style.display = 'none';
+        $('#agregarPacienteModal').modal('hide');
+        // Eliminar cualquier backdrop residual
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+      });
+
+
+      const submitButton = document.querySelector('#agregarPacienteForm button[type="submit"]');
+      if (submitButton.innerText === 'Guardar') {
+        const pacienteId = document.getElementById('agregarPacienteForm').dataset.pacienteId;
+        fetch(`/api/pacientes/${pacienteId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(paciente)
+        })
+                .then(response => response.json())
+                .then(data => {
+                  document.getElementById('agregarPacienteForm').reset();
+                  document.getElementById('tipoDocumento').value = 'Seleccionar';
+                  document.getElementById('agregarPacienteModalLabel').innerText = 'Agregar Paciente';
+                  submitButton.innerText = 'Agregar Paciente';
+                  document.getElementById('cancelarEdicion').style.display = 'none';
+                  $('#agregarPacienteModal').modal('hide');
+                  loadPacientes();
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
+      } else {
+        fetch('/api/pacientes/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(paciente)
+        })
+                .then(response => {
+                  if (response.ok) {
+                    return response.json();
+                  } else if (response.status === 400) {
+                    throw new Error("Este documento ya está registrado");
+                  } else {
+                    throw new Error("Error al registrar el paciente");
+                  }
+                })
+                .then(data => {
+                  document.getElementById('agregarPacienteForm').reset();
+                  document.getElementById('tipoDocumento').value = 'Seleccionar';
+                  $('#agregarPacienteModal').modal('hide');
+                  loadPacientes();
+                })
+                .catch(error => {
+                  const errorMessage = document.getElementById('error-message');
+                  errorMessage.innerText = error.message;
+                  errorMessage.classList.remove('d-none');
+                });
+      }
+    });
+    loadPacientes();
+  });
+
+  function loadPacientes() {
+    fetch('/api/pacientes')
+            .then(response => response.json())
+            .then(pacientes => {
+              const pacienteList = document.getElementById('paciente-list');
+              pacienteList.innerHTML = '';  // Limpiar la lista antes de agregar nuevos elementos
+              pacientes.forEach(paciente => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div>
+                    <img src="./assets/img/paciente.png" class="avatar avatar-sm me-3" alt="user1">
+                  </div>
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">${paciente.nombre} ${paciente.apellido}</h6>
+                    <p class="text-xs text-secondary mb-0">${paciente.documento}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="text-center text-xs font-weight-bold">${paciente.fechaNacimiento}</td>
+              <td class="text-center text-xs font-weight-bold">${paciente.telefono}</td>
+              <td class="text-center text-xs font-weight-bold">
+                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user" onclick="editPaciente(${paciente.id})">
+                  Editar
+                </a>
+                <a href="javascript:;" class="text-danger font-weight-bold text-xs ml-3" data-toggle="tooltip" data-original-title="Delete user" onclick="confirmDeletePaciente(${paciente.id})">
+                  Eliminar
+                </a>
+              </td>
+            `;
+                pacienteList.appendChild(row);
+              });
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  }
+
+  function cargarARS() {
+    fetch('/api/ars')
+            .then(response => response.json())
+            .then(arsList => {
+              const seguroSaludSelect = document.getElementById('seguroSalud');
+              seguroSaludSelect.innerHTML = ''; // Limpiar las opciones actuales
+
+              const noAseguradoOption = document.createElement('option');
+              noAseguradoOption.value = 'NO ASEGURADO';
+              noAseguradoOption.text = 'NO ASEGURADO';
+              seguroSaludSelect.appendChild(noAseguradoOption);
+
+              arsList.forEach(ars => {
+                const option = document.createElement('option');
+                option.value = ars.id;
+                option.text = ars.nombreARS;
+                seguroSaludSelect.appendChild(option);
+              });
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  }
+
+  function toggleNSSField() {
+    const seguroSaludSelect = document.getElementById('seguroSalud');
+    const nssField = document.getElementById('nss');
+    if (seguroSaludSelect.value === 'NO ASEGURADO') {
+      nssField.disabled = true;
+      nssField.value = '';
+    } else {
+      nssField.disabled = false;
+    }
+  }
+
+  window.editPaciente = function(id) {
+    fetch(`/api/pacientes/${id}`)
+            .then(response => response.json())
+            .then(paciente => {
+              document.getElementById('nombre').value = paciente.nombre;
+              document.getElementById('apellido').value = paciente.apellido;
+              document.getElementById('tipoDocumento').value = paciente.tipoDocumento;
+              document.getElementById('documento').value = paciente.documento;
+              document.getElementById('fechaNacimiento').value = paciente.fechaNacimiento;
+              document.getElementById('telefono').value = paciente.telefono;
+              document.getElementById('direccion').value = paciente.direccion;
+              document.getElementById('seguroSalud').value = paciente.seguroSalud;
+              document.getElementById('nss').value = paciente.nss;
+              document.getElementById('nss').disabled = paciente.seguroSalud === 'NO ASEGURADO';
+              document.getElementById('correo').value = paciente.correo;
+              document.getElementById('agregarPacienteModalLabel').innerText = 'Editar datos de paciente';
+              document.querySelector('#agregarPacienteForm button[type="submit"]').innerText = 'Guardar';
+              document.getElementById('cancelarEdicion').style.display = 'inline-block';
+              document.getElementById('agregarPacienteForm').dataset.pacienteId = id;
+              $('#agregarPacienteModal').modal('show');
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  };
+
+  window.confirmDeletePaciente = function(id) {
+    $('#confirmarEliminarModal').modal('show');
+    document.getElementById('confirmarEliminarBtn').onclick = function () {
+      deletePaciente(id);
+    };
+  };
+
+  function deletePaciente(id) {
+    fetch(`/api/pacientes/delete/${id}`, {
+      method: 'PUT'
+    })
+            .then(response => response.json())
+            .then(data => {
+              $('#confirmarEliminarModal').modal('hide');
+              loadPacientes();
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  }
+
+  document.getElementById('cancelarEdicion').addEventListener('click', function () {
+    document.getElementById('agregarPacienteForm').reset();
+    document.getElementById('tipoDocumento').value = 'Seleccionar';
+    document.getElementById('agregarPacienteModalLabel').innerText = 'Agregar Paciente';
+    document.querySelector('#agregarPacienteForm button[type="submit"]').innerText = 'Agregar Paciente';
+    document.getElementById('cancelarEdicion').style.display = 'none';
+    $('#agregarPacienteModal').modal('hide');
+  });
+</script>
+</body>
+
+</html>

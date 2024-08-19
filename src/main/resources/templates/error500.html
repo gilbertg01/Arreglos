@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Server Error</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-family: 'Nunito', sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            position: relative;
+            max-width: 700px;
+            padding: 20px;
+        }
+        .error {
+            font-size: 6rem;
+            font-weight: bold;
+            color: white;
+            background-color: rgba(220, 53, 69, 0.8); /* Fondo rojo semitransparente */
+            padding: 10px 20px;
+            border-radius: 8px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .message {
+            font-size: 1.2rem;
+            color: #dc3545; /* Color rojo para resaltar */
+            margin-top: 20px;
+            font-weight: bold; /* Negrita para mayor énfasis */
+        }
+        .image-container {
+            position: relative;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button {
+            margin-top: 20px;
+        }
+        .button a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button a:hover {
+            background-color: #0056b3;
+        }
+        @keyframes float {
+            0% {
+                transform: translate(-50%, -50%) translateY(0);
+            }
+            50% {
+                transform: translate(-50%, -50%) translateY(-20px);
+            }
+            100% {
+                transform: translate(-50%, -50%) translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="image-container">
+        <img src="https://i.imgur.com/U2kw9v5.jpeg" alt="Laboratorio" width="400">
+        <div class="error">500</div>
+    </div>
+    <div class="message">Ha ocurrido un error interno en el servidor.</div>
+    <div class="button">
+        <a href="/">Volver al inicio</a>
+    </div>
+</div>
+</body>
+</html>

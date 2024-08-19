@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <title>
+    Lab System│ARS
+  </title>
+  <!-- Fonts and icons -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="./assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="./assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="./assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .nav-link.active {
+      background-color: #596CFF !important;
+      color: #fff !important;
+    }
+    .nav-link.active .icon-shape {
+      background-color: #2c3e50 !important;
+      color: white !important;
+    }
+
+    .nav-link.active i {
+      color: white !important;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .container-fluid {
+      max-width: 100%;
+      overflow-x: hidden;
+      padding: 0 15px; /* Añadir padding para asegurar que el contenido no toque los bordes */
+    }
+
+    .card {
+      margin-bottom: 20px;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      table-layout: auto;
+    }
+
+    .table th, .table td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+
+    .main-content {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .sidenav {
+      width: 250px;
+    }
+  </style>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+<div class="min-height-300 position-absolute w-100" style="background-color: #596CFF;"></div>
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
+  <div class="sidenav-header">
+    <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+    <a class="navbar-brand m-0" href="/">
+      <img src="./assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+      <span class="ms-1 font-weight-bold">Lab System</span>
+    </a>
+  </div>
+  <hr class="horizontal dark mt-0">
+  <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link " id="nav-tablero" href="/">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Tablero</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-empleados" href="/empleados">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Empleados</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-pacientes" href="/pacientes">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Pacientes</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-suplidores" href="/suplidores">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Suplidores</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-doctores" href="/doctores">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Doctores</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" id="nav-ars" href="/ars">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">ARS</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="nav-prueba" href="pruebas">
+          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+          </div>
+          <span class="nav-link-text ms-1">Pruebas</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+<main class="main-content position-relative border-radius-lg">
+  <!-- Navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
+          <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tablero</li>
+        </ol>
+        <h6 class="font-weight-bolder text-white mb-0">Tablero</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+          <div class="input-group">
+          </div>
+        </div>
+        <ul class="navbar-nav  justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <form action="/logout" method="post" id="logoutForm" class="d-none">
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+            <a href="javascript:;" onclick="document.getElementById('logoutForm').submit();" class="nav-link text-white font-weight-bold px-0">
+              <i class="fa fa-user me-sm-1"></i>
+              <span class="d-sm-inline d-none">Cerrar sesión</span>
+            </a>
+          </li>
+          <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+              <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+                <i class="sidenav-toggler-line bg-white"></i>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item px-3 d-flex align-items-center">
+            <a href="javascript:;" class="nav-link text-white p-0">
+              <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+            <h6>ARS</h6>
+            <!-- Botón para abrir el modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarARSModal">Agregar ARS</button>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">RNC</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Representante</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Correo</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Teléfono</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
+                </thead>
+                <tbody id="ars-list">
+                <!-- Aquí se llenará la lista de ARS desde el frontend -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-5">
+      <div class="modal fade" id="agregarARSModal" tabindex="-1" role="dialog" aria-labelledby="agregarARSModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="agregarARSModalLabel">Registrar ARS</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="agregarARSForm">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="nombreARS">Nombre</label>
+                    <input type="text" class="form-control" id="nombreARS" name="nombreARS" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="RNC">RNC</label>
+                    <input type="text" class="form-control" id="RNC" name="RNC" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="representante">Representante</label>
+                    <input type="text" class="form-control" id="representante" name="representante" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="direccion">Dirección</label>
+                  <input type="text" class="form-control" id="direccion" name="direccion" required>
+                </div>
+                <div class="form-group">
+                  <label for="correo">Correo</label>
+                  <input type="email" class="form-control" id="correo" name="correo" required>
+                </div>
+                <div class="form-group">
+                  <label for="descuento">Descuento % (Debe ingresarlo en decimal (0.0))</label>
+                  <input type="number" class="form-control" id="descuento" name="descuento" step="0.01" min="0" max="100" required>
+                </div>
+                <input type="hidden" id="activo" name="activo" value="true">
+                <button type="submit" class="btn btn-primary">Registrar ARS</button>
+                <button type="button" class="btn btn-danger" id="cancelarEdicion" style="display:none;">Cancelar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal de confirmación para eliminar -->
+    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar eliminación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>¿Está seguro de que desea eliminar esta ARS?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirmarEliminarBtn">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    </div>
+  </footer>
+  </div>
+</main>
+<!-- Core JS Files -->
+<script src="/assets/js/core/popper.min.js"></script>
+<script src="/assets/js/core/bootstrap.min.js"></script>
+<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script>
+  var win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+      damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+  }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+<!-- jQuery y Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('agregarARSForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const ars = {
+        nombreARS: document.getElementById('nombreARS').value,
+        rnc: parseInt(document.getElementById('RNC').value),
+        representante: document.getElementById('representante').value,
+        direccion: document.getElementById('direccion').value,
+        telefono: parseInt(document.getElementById('telefono').value),
+        correo: document.getElementById('correo').value,
+        descuento: parseFloat(document.getElementById('descuento').value),
+        activo: true
+      };
+
+      const submitButton = document.querySelector('#agregarARSForm button[type="submit"]');
+      if (submitButton.innerText === 'Guardar') {
+        const arsId = document.getElementById('agregarARSForm').dataset.arsId;
+        fetch(`/api/ars/${arsId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(ars)
+        })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  document.getElementById('agregarARSForm').reset();
+                  document.getElementById('agregarARSModalLabel').innerText = 'Agregar ARS';
+                  submitButton.innerText = 'Registrar ARS';
+                  document.getElementById('cancelarEdicion').style.display = 'none';
+                  $('#agregarARSModal').modal('hide');
+                  loadARS();
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
+      } else {
+        fetch('/api/ars/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(ars)
+        })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  document.getElementById('agregarARSForm').reset();
+                  $('#agregarARSModal').modal('hide');
+                  loadARS();
+                })
+                .catch(error => {
+                  console.error('Error:', error);
+                });
+      }
+    });
+
+    loadARS();
+  });
+
+  function loadARS() {
+    fetch('/api/ars')
+            .then(response => response.json())
+            .then(arsList => {
+              const arsListElement = document.getElementById('ars-list');
+              arsListElement.innerHTML = '';  // Limpiar la lista antes de agregar nuevos elementos
+              arsList.forEach(ars => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>
+                    <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">${ars.nombreARS}</h6>
+                            <p class="text-xs text-secondary mb-0">${ars.rnc}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center text-xs font-weight-bold">${ars.rnc}</td>
+                <td class="text-center text-xs font-weight-bold">${ars.representante}</td>
+                <td class="text-center text-xs font-weight-bold">${ars.correo}</td>
+                <td class="text-center text-xs font-weight-bold">${ars.telefono}</td>
+
+                <td class="text-center text-xs font-weight-bold">
+                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user" onclick="editARS(${ars.id})">
+                        Editar
+                    </a>
+                    <a href="javascript:;" class="text-danger font-weight-bold text-xs ml-3" data-toggle="tooltip" data-original-title="Delete user" onclick="confirmDeleteARS(${ars.id})">
+                        Eliminar
+                    </a>
+                </td>
+            `;
+                arsListElement.appendChild(row);
+              });
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  }
+
+  window.editARS = function(id) {
+    fetch(`/api/ars/${id}`)
+            .then(response => response.json())
+            .then(ars => {
+              document.getElementById('nombreARS').value = ars.nombreARS;
+              document.getElementById('RNC').value = ars.rnc; // Cambiar a minúsculas para coincidir con el JSON
+              document.getElementById('representante').value = ars.representante;
+              document.getElementById('direccion').value = ars.direccion;
+              document.getElementById('telefono').value = ars.telefono;
+              document.getElementById('correo').value = ars.correo;
+              document.getElementById('descuento').value = ars.descuento;
+              document.getElementById('agregarARSModalLabel').innerText = 'Editar datos de ARS';
+              document.querySelector('#agregarARSForm button[type="submit"]').innerText = 'Guardar';
+              document.getElementById('cancelarEdicion').style.display = 'inline-block';
+              document.getElementById('agregarARSForm').dataset.arsId = id;
+              $('#agregarARSModal').modal('show');
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  };
+
+  window.confirmDeleteARS = function(id) {
+    $('#confirmarEliminarModal').modal('show');
+    document.getElementById('confirmarEliminarBtn').onclick = function () {
+      deleteARS(id);
+    };
+  };
+
+  function deleteARS(id) {
+    fetch(`/api/ars/delete/${id}`, {
+      method: 'PUT'
+    })
+            .then(response => response.json())
+            .then(data => {
+              $('#confirmarEliminarModal').modal('hide');
+              loadARS();
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  }
+
+  document.getElementById('cancelarEdicion').addEventListener('click', function () {
+    document.getElementById('agregarARSForm').reset();
+    document.getElementById('agregarARSModalLabel').innerText = 'Agregar ARS';
+    document.querySelector('#agregarARSForm button[type="submit"]').innerText = 'Registrar ARS';
+    document.getElementById('cancelarEdicion').style.display = 'none';
+    $('#agregarARSModal').modal('hide');
+  });
+
+</script>
+</body>
+</html>
