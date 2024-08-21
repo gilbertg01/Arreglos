@@ -3,6 +3,8 @@ import jakarta.websocket.server.PathParam;
 import laboratorio.Email.Servicio.EmailService;
 import laboratorio.Facturacion.Entidades.Factura;
 import laboratorio.Facturacion.Entidades.FacturaDTO;
+import laboratorio.Facturacion.Entidades.FacturaPrueba;
+import laboratorio.Facturacion.Repositorios.FacturaPruebaRepository;
 import laboratorio.Facturacion.Repositorios.FacturaRepository;
 import laboratorio.Paciente.Entidades.Paciente;
 import laboratorio.Pruebas.Entidades.Prueba;
@@ -30,6 +32,9 @@ public class ResultadoRestController {
     private PruebaRepository pruebaRepository;
 
     @Autowired
+    private FacturaPruebaRepository facturaPruebaRepository;
+
+    @Autowired
     private FacturaRepository facturaRepository;
 
     @Autowired
@@ -50,13 +55,20 @@ public class ResultadoRestController {
 
             Factura factura = optionalFactura.get();
             Prueba prueba = optionalPrueba.get();
+
+            Optional<FacturaPrueba> optionalFacturaPrueba = facturaPruebaRepository.findByFacturaAndPrueba(factura, prueba);
+            if (!optionalFacturaPrueba.isPresent()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "La prueba no está asociada a esta factura"));
+            }
+
+            FacturaPrueba facturaPrueba = optionalFacturaPrueba.get();
             Paciente paciente = factura.getPaciente();
 
             Resultado resultado = new Resultado(factura, prueba, resultadoRequest.getResultadoTexto(), paciente);
             resultadoRepository.save(resultado);
 
-            boolean todasPruebasConResultados = factura.getPruebas().stream()
-                    .allMatch(p -> resultadoRepository.existsByPruebaAndFactura(p, factura));
+            boolean todasPruebasConResultados = factura.getFacturaPruebas().stream()
+                    .allMatch(fp -> resultadoRepository.existsByPruebaAndFactura(fp.getPrueba(), factura));
             if (todasPruebasConResultados) {
                 factura.setCompletada(true);
                 facturaRepository.save(factura);
@@ -64,8 +76,8 @@ public class ResultadoRestController {
 
             emailService.enviarCorreoResultado(paciente, prueba, resultado);
 
-            List<PruebaDTO> pruebasDTO = factura.getPruebas().stream()
-                    .map(p -> new PruebaDTO(p, resultadoRepository.existsByPruebaAndFactura(p, factura)))
+            List<PruebaDTO> pruebasDTO = factura.getFacturaPruebas().stream()
+                    .map(fp -> new PruebaDTO(fp.getPrueba(), resultadoRepository.existsByPruebaAndFactura(fp.getPrueba(), factura)))
                     .collect(Collectors.toList());
 
             List<FacturaDTO> facturasDTO = facturaRepository.findByCompletadaFalse().stream()

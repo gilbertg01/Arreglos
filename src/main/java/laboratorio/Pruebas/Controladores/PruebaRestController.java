@@ -28,7 +28,7 @@ public class PruebaRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Prueba> getPruebaById(@PathVariable UUID id) {
+    public ResponseEntity<Prueba> getPruebaById(@PathVariable Long id) {
         Optional<Prueba> prueba = pruebaRepositorio.findById(id);
         return prueba.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -44,7 +44,7 @@ public class PruebaRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Prueba> updatePrueba(@PathVariable UUID id, @RequestBody Prueba pruebaDetails) {
+    public ResponseEntity<Prueba> updatePrueba(@PathVariable Long id, @RequestBody Prueba pruebaDetails) {
         Optional<Prueba> optionalPrueba = pruebaRepositorio.findById(id);
         if (optionalPrueba.isPresent()) {
             Prueba prueba = optionalPrueba.get();
@@ -64,7 +64,7 @@ public class PruebaRestController {
     }
 
     @PutMapping("/delete/{id}")
-    public ResponseEntity<Void> deletePrueba(@PathVariable UUID id) {
+    public ResponseEntity<Void> deletePrueba(@PathVariable Long id) {
         Optional<Prueba> optionalPrueba = pruebaRepositorio.findById(id);
         if (optionalPrueba.isPresent()) {
             Prueba prueba = optionalPrueba.get();

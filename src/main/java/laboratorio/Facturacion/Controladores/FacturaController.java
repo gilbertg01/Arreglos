@@ -59,15 +59,22 @@ public class FacturaController {
         factura.setPaciente(paciente);
         factura.setFechaEmision(new Date());
 
-        List<Prueba> pruebas = facturaRequest.getPruebas().stream()
-                .map(nombrePrueba -> pruebaRepository.findByNombrePrueba(nombrePrueba)
-                        .orElseThrow(() -> new RuntimeException("Prueba no encontrada: " + nombrePrueba)))
+        List<FacturaPrueba> facturaPruebas = facturaRequest.getPruebas().stream()
+                .map(nombrePrueba -> {
+                    Prueba prueba = pruebaRepository.findByNombrePrueba(nombrePrueba)
+                            .orElseThrow(() -> new RuntimeException("Prueba no encontrada: " + nombrePrueba));
+
+                    // Crear una nueva instancia de FacturaPrueba
+                    FacturaPrueba facturaPrueba = new FacturaPrueba();
+                    facturaPrueba.setPrueba(prueba);
+                    facturaPrueba.setFactura(factura);
+                    return facturaPrueba;
+                })
                 .collect(Collectors.toList());
 
-        factura.setPruebas(pruebas);
+        factura.setFacturaPruebas(facturaPruebas);
 
-        double subtotal = pruebas.stream().mapToDouble(Prueba::getCosto).sum();
-        // Manejar el caso donde ARS puede ser null
+        double subtotal = facturaPruebas.stream().mapToDouble(fp -> fp.getPrueba().getCosto()).sum();
         double descuento = 0;
         if (paciente.getArs() != null) {
             descuento = paciente.getArs().getDescuento();
@@ -95,10 +102,12 @@ public class FacturaController {
         paciente.getFacturas().add(savedFactura);
         pacienteRepository.save(paciente);
 
-        emailService.enviarCorreoFactura(paciente, savedFactura, pruebas);
+        emailService.enviarCorreoFactura(paciente, savedFactura, facturaPruebas.stream().map(FacturaPrueba::getPrueba).collect(Collectors.toList()));
         System.out.println("\nFactura procesada: \n" + savedFactura);
         return ResponseEntity.ok(savedFactura);
     }
+
+
 
     @GetMapping("/noCompletadas")
     public ResponseEntity<List<FacturaDTO>> getFacturasNoCompletadas() {
@@ -113,13 +122,12 @@ public class FacturaController {
         if (!facturaOpt.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+
         Factura factura = facturaOpt.get();
-        List<PruebaDTO> pruebasDTO = factura.getPruebas().stream()
-                .filter(prueba -> !resultadoRepository.existsByPruebaAndFactura(prueba, factura))
-                .map(prueba -> new PruebaDTO(prueba, resultadoRepository.existsByPruebaAndFactura(prueba, factura)))
+        List<PruebaDTO> pruebasDTO = factura.getFacturaPruebas().stream()
+                .map(facturaPrueba -> new PruebaDTO(facturaPrueba.getPrueba(), resultadoRepository.existsByPruebaAndFactura(facturaPrueba.getPrueba(), factura)))
                 .collect(Collectors.toList());
+
         return ResponseEntity.ok(pruebasDTO);
     }
-
-
 }

@@ -5,7 +5,7 @@ import java.util.UUID;
 public class ResultadoRequest {
 
     private  Long facturaId;
-    private UUID pruebaId;
+    private Long pruebaId;
     private String resultadoTexto;
 
     public Long getFacturaId() {
@@ -16,11 +16,11 @@ public class ResultadoRequest {
         this.facturaId = facturaId;
     }
 
-    public UUID getPruebaId() {
+    public Long getPruebaId() {
         return pruebaId;
     }
 
-    public void setPruebaId(UUID pruebaId) {
+    public void setPruebaId(Long pruebaId) {
         this.pruebaId = pruebaId;
     }
 

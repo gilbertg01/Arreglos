@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PruebaRepository extends JpaRepository<Prueba, UUID> {
+public interface PruebaRepository extends JpaRepository<Prueba, Long> {
     List<Prueba> findByCodigoPruebaStartingWith(String base);
     Optional<Prueba> findByNombrePrueba(String nombrePrueba);
 }

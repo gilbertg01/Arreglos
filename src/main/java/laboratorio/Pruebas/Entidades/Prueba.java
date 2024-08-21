@@ -12,8 +12,8 @@ import java.util.UUID;
 public class Prueba {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idPrueba;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idPrueba;
 
     @Column(name = "nombre_prueba", nullable = false, length = 100)
     private String nombrePrueba;
@@ -53,7 +53,6 @@ public class Prueba {
     }
 
     public Prueba(String nombrePrueba, String preparacionPaciente, String muestraRequerida, double costo, String categoriaPrueba, String notasAdicionales, boolean estado) {
-        this.idPrueba = UUID.randomUUID();
         this.nombrePrueba = nombrePrueba;
         this.preparacionPaciente = preparacionPaciente;
         this.muestraRequerida = muestraRequerida;
@@ -97,11 +96,11 @@ public class Prueba {
 
     // Getters y Setters
 
-    public UUID getIdPrueba() {
+    public Long getIdPrueba() {
         return idPrueba;
     }
 
-    public void setIdPrueba(UUID idPrueba) {
+    public void setIdPrueba(Long idPrueba) {
         this.idPrueba = idPrueba;
     }
 

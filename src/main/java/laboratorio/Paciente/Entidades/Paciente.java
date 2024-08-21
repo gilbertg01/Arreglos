@@ -1,5 +1,6 @@
 package laboratorio.Paciente.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import laboratorio.ARS.Entidades.ARS;
@@ -65,6 +66,7 @@ public class Paciente {
     private String correo;
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Factura> facturas;
 
     public Paciente() {}

@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import laboratorio.Pruebas.Entidades.Prueba;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,6 @@ public class Factura {
 
     @ManyToOne
     @JoinColumn(name = "paciente_id")
-    @JsonIgnore
     private Paciente paciente;
 
     @Temporal(TemporalType.DATE)
@@ -36,9 +36,9 @@ public class Factura {
     @JoinColumn(name = "metodo_pago_id", nullable = false)
     private MetodoPago metodoPago;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "factura_id")
-    private List<Prueba> pruebas;
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<FacturaPrueba> facturaPruebas = new ArrayList<>();
 
     @Column(name = "completada", nullable = false)
     private boolean completada = false;
@@ -103,12 +103,12 @@ public class Factura {
         this.metodoPago = metodoPago;
     }
 
-    public List<Prueba> getPruebas() {
-        return pruebas;
+    public List<FacturaPrueba> getFacturaPruebas() {
+        return facturaPruebas;
     }
 
-    public void setPruebas(List<Prueba> pruebas) {
-        this.pruebas = pruebas;
+    public void setFacturaPruebas(List<FacturaPrueba> facturaPruebas) {
+        this.facturaPruebas = facturaPruebas;
     }
 
     public boolean isCompletada() {

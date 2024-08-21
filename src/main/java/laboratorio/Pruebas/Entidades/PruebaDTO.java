@@ -3,7 +3,7 @@ package laboratorio.Pruebas.Entidades;
 import java.util.UUID;
 
 public class PruebaDTO {
-    private UUID id;
+    private Long id;
     private String nombrePrueba;
     private double costo;
     private boolean tieneResultado;
@@ -15,11 +15,11 @@ public class PruebaDTO {
         this.tieneResultado = tieneResultado;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
