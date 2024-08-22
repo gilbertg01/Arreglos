@@ -70,10 +70,15 @@ public class EmailService {
         cuerpo = cuerpo.replace("{{descuento}}", String.format("%.2f", descuento * 100));
 
         StringBuilder pruebasHTML = new StringBuilder();
+        StringBuilder costosHTML = new StringBuilder();
+
         for (Prueba prueba : pruebas) {
-            pruebasHTML.append("<li>").append(prueba.getNombrePrueba()).append(" - $").append(prueba.getCosto()).append("</li>");
+            pruebasHTML.append("<li>").append(prueba.getNombrePrueba()).append("</li>");
+            costosHTML.append("<li style=\"text-align: right;\">$").append(String.format("%.2f", prueba.getCosto())).append("</li>");
         }
+
         cuerpo = cuerpo.replace("{{pruebas}}", pruebasHTML.toString());
+        cuerpo = cuerpo.replace("{{costo}}", costosHTML.toString());
         cuerpo = cuerpo.replace("{{total}}", String.format("%.2f", factura.getTotal()));
 
         Email email = EmailBuilder.startingBlank()
@@ -85,6 +90,7 @@ public class EmailService {
 
         mailer.sendMail(email);
     }
+
 
 
     @Async
