@@ -536,31 +536,42 @@
     }
   }
 
-  window.editPaciente = function(id) {
-    fetch(`/api/pacientes/${id}`)
-            .then(response => response.json())
-            .then(paciente => {
-              document.getElementById('nombre').value = paciente.nombre;
-              document.getElementById('apellido').value = paciente.apellido;
-              document.getElementById('tipoDocumento').value = paciente.tipoDocumento;
-              document.getElementById('documento').value = paciente.documento;
-              document.getElementById('fechaNacimiento').value = paciente.fechaNacimiento;
-              document.getElementById('telefono').value = paciente.telefono;
-              document.getElementById('direccion').value = paciente.direccion;
-              document.getElementById('seguroSalud').value = paciente.seguroSalud;
-              document.getElementById('nss').value = paciente.nss;
-              document.getElementById('nss').disabled = paciente.seguroSalud === 'NO ASEGURADO';
-              document.getElementById('correo').value = paciente.correo;
-              document.getElementById('agregarPacienteModalLabel').innerText = 'Editar datos de paciente';
-              document.querySelector('#agregarPacienteForm button[type="submit"]').innerText = 'Guardar';
-              document.getElementById('cancelarEdicion').style.display = 'inline-block';
-              document.getElementById('agregarPacienteForm').dataset.pacienteId = id;
-              $('#agregarPacienteModal').modal('show');
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-  };
+  window.editPaciente = async function(id) {
+    try {
+      const responsePaciente = await fetch(`/api/pacientes/${id}`);
+      const paciente = await responsePaciente.json();
+
+      await cargarARS(); // Cargar y esperar a que se llenen las opciones de ARS
+
+      // Establecer el valor con un pequeño delay
+      setTimeout(() => {
+        const seguroSaludSelect = document.getElementById('seguroSalud');
+        seguroSaludSelect.value = paciente.seguroSalud;
+
+        toggleNSSField(); // Actualizar el estado del campo NSS según el seguro seleccionado
+
+        // Resto de la asignación de valores
+        document.getElementById('nombre').value = paciente.nombre;
+        document.getElementById('apellido').value = paciente.apellido;
+        document.getElementById('tipoDocumento').value = paciente.tipoDocumento;
+        document.getElementById('documento').value = paciente.documento;
+        document.getElementById('fechaNacimiento').value = paciente.fechaNacimiento;
+        document.getElementById('telefono').value = paciente.telefono;
+        document.getElementById('direccion').value = paciente.direccion;
+        document.getElementById('nss').value = paciente.nss;
+        document.getElementById('correo').value = paciente.correo;
+        document.getElementById('agregarPacienteModalLabel').innerText = 'Editar datos de paciente';
+        document.querySelector('#agregarPacienteForm button[type="submit"]').innerText = 'Guardar';
+        document.getElementById('cancelarEdicion').style.display = 'inline-block';
+        document.getElementById('agregarPacienteForm').dataset.pacienteId = id;
+        $('#agregarPacienteModal').modal('show');
+      }, 100); // Un pequeño delay de 100 ms
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
 
   window.confirmDeletePaciente = function(id) {
     $('#confirmarEliminarModal').modal('show');
