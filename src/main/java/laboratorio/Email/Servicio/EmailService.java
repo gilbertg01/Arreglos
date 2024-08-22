@@ -16,6 +16,8 @@ import laboratorio.Empleados.Entidades.Empleado;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -98,10 +100,16 @@ public class EmailService {
         String asunto = "Resultado de su Prueba - Laboratorio Médico";
         String cuerpo = cargarContenidoHTML("correo_resultado.html");
 
+        // Obtener la fecha y hora actual
+        LocalDateTime fechaEnvio = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String fechaFormateada = fechaEnvio.format(formatter);
+
         cuerpo = cuerpo.replace("{{nombre}}", capitalizarPrimeraLetra(paciente.getNombre()));
         cuerpo = cuerpo.replace("{{apellido}}", capitalizarPrimeraLetra(paciente.getApellido()));
         cuerpo = cuerpo.replace("{{nombrePrueba}}", prueba.getNombrePrueba());
         cuerpo = cuerpo.replace("{{resultado}}", resultado.getResultadoTexto());
+        cuerpo = cuerpo.replace("{{fechaEnvio}}", fechaFormateada);
 
         Email email = EmailBuilder.startingBlank()
                 .from("noreply@systechs.live")
